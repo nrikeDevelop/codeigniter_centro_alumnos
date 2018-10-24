@@ -18,12 +18,9 @@ class Main_view extends CI_Controller{
         $this->load->helper('url');
         $this->load->model('cursos');
         
-        // load form and url helpers
-         $this->load->helper(array('form', 'url'));
-
-         // load form_validation library
-         $this->load->library('form_validation');
-        
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');
+        $this->load->helper('security');   
     }
     
     public function loadHeader(){       
@@ -120,29 +117,26 @@ class Main_view extends CI_Controller{
    
     public function form_notas($id_alumno){
         
-        if($this->input->post('nota')>10 or $this->input->post('nota')<0 ){
-            
-            //Error
-            
-        }
-        
-        $evaluacion = $this->getValueEvaluacion($id_alumno, $this->input->post('asign'), $this->input->post('eval'));      
-        if (empty($evaluacion)){
-            //insertar datos
-            $this->cursos->set_alumnos_asignaturas_evaluacion($id_alumno, $this->input->post('asign'), $this->input->post('eval'),$this->input->post('nota'));
+        $nota = $this->input->post('nota');
 
+        $this->form_validation->set_rules('nota','Nota','required|greater_than_equal_to[0]|less_than_equal_to[10]');
+       
+        if ($this->form_validation->run() == FALSE){
+            //ERROR        
         }else{
-            //preguntar y cambiar
-            
-
-        }
-
-   
-        
+            //SUCCESS
+            $evaluacion = $this->getValueEvaluacion($id_alumno, $this->input->post('asign'), $this->input->post('eval'));    
+            if(empty($evaluacion)){
+                //El valor en dicha situación está vacio, podemos introducir el dato.
+                $this->cursos->set_alumnos_asignaturas_evaluacion($id_alumno, $this->input->post('asign'), $this->input->post('eval'),$nota);       
+            }else{
+                //El valor existe, deseamos remplazarlo, crear una vista con dos botones si y no y remplazar el dato.
+                
+                
+            }
+   }     
         //Una vez optenidos los datos, volvemos a cargar la vista
         $this->loadAlumnosAsignaturas($id_alumno);
-        
-      
     }
     
 }
