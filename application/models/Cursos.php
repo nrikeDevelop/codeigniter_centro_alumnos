@@ -99,4 +99,23 @@ SQL;
         $response = $this->db->query($sql);
         return $response->result();
     }
+    
+    public function set_alumnos_asignaturas_evaluacion($id_alumno,$id_contenido,$evaluacion,$nota){
+        $this->db->set('id_alumno', $id_alumno);
+        $this->db->set('id_contenido', $id_contenido);
+        $this->db->set('num_evaluacion', $evaluacion);
+        $this->db->set('nota', $nota);
+        $this->db->insert('evaluacion');
+    }
+    
+
+    public function delete_alumnos_asignaturas_evaluacion($id_alumno,$id_contenido,$evaluacion,$nota){
+        $sql = <<< SQL
+        delete from evaluacion   
+        WHERE id_alumno = $id_alumno AND id_contenido=$id_contenido AND num_evaluacion = $evaluacion 
+SQL;
+        
+        $this->db->query($sql);
+    }
+   
 }

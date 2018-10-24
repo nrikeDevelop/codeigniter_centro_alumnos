@@ -17,6 +17,13 @@ class Main_view extends CI_Controller{
         parent::__construct();
         $this->load->helper('url');
         $this->load->model('cursos');
+        
+        // load form and url helpers
+         $this->load->helper(array('form', 'url'));
+
+         // load form_validation library
+         $this->load->library('form_validation');
+        
     }
     
     public function loadHeader(){       
@@ -87,6 +94,8 @@ class Main_view extends CI_Controller{
         foreach ($data['asignaturas'] as $value) {
 
             $data['title'] = $value->nombre_alumno;
+            $data['id_alumno'] = $value->id_alumno;
+            
             $array_asignatura = array(
                     "asignatura" => $value->nombre,
                     "id_asignatura" => $value->id_asignatura,
@@ -109,10 +118,31 @@ class Main_view extends CI_Controller{
     }
     
    
-    public function form_notas(){
-        echo $this->input->post('nota');
-    
-        die();
+    public function form_notas($id_alumno){
+        
+        if($this->input->post('nota')>10 or $this->input->post('nota')<0 ){
+            
+            //Error
+            
+        }
+        
+        $evaluacion = $this->getValueEvaluacion($id_alumno, $this->input->post('asign'), $this->input->post('eval'));      
+        if (empty($evaluacion)){
+            //insertar datos
+            $this->cursos->set_alumnos_asignaturas_evaluacion($id_alumno, $this->input->post('asign'), $this->input->post('eval'),$this->input->post('nota'));
+
+        }else{
+            //preguntar y cambiar
+            
+
+        }
+
+   
+        
+        //Una vez optenidos los datos, volvemos a cargar la vista
+        $this->loadAlumnosAsignaturas($id_alumno);
+        
+      
     }
     
 }
