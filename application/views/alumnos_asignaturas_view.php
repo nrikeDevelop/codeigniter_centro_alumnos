@@ -3,13 +3,6 @@
         <div class="row">
             <div class="col-xs-12 col-lg-12">
                 <br><br>
-                
-                <div class="<?php echo $alert_state?>" role="alert">                  
-                      La nota introducida ya existe, ¿Desea remplazarla?
-                        <a class="btn btn-warning" style="margin-left:30px;margin-right:10px;">Si</a><a class="btn btn-warning">No</a>
-                  </div>
-                <br>
-                
                 <?php echo validation_errors( '<div class="alert alert-danger">', '</div>');?>
                 
                 <div class="card">

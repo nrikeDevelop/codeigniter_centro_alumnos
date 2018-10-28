@@ -1,4 +1,7 @@
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta charset="UTF-8">
     <!--BOOSTRAP-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -22,8 +25,48 @@
     <!-- style -->
     
     <style>
+           
+        @import url('https://fonts.googleapis.com/css?family=Ubuntu');
+        *{
+            font-family: 'Ubuntu', sans-serif;
+        }
+        
+        .circle {
+            height: 50px;
+            width: 50px;          
+            border-radius: 50%;
+            display: inline-block;
+        }      
+        
+        .link-color-purple{
+            color:#a997cd;
+        }
+        
+        .text-color-purple{
+            color: #4E2EA3;
+        }
+        
+        .text-color-white{
+            color:#ffffff; 
+        }
+        
+        .text-color-black{
+            color: #1b1b1b;
+        }
+        
+        .bg-color-white{
+            background-color: #c7c7c7;
+        }
+        
+        .bg-color-light-purple{
+            background-color: #a997cd;
+        }
+        
+        .bg-color-purple{
+           background-color: #4E2EA3;
+        }
         .bg-color-body{
-            background-color: #b0bec5;
+            background-color: #4E2EA3;
         }
         
         .td-center{
