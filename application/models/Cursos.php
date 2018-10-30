@@ -6,6 +6,10 @@
  *
  * @author a021697152x
  */
+
+/*CONSULTAS SQL*/
+/*La funcionalidad la podemos definir por su nombre*/
+
 class Cursos extends CI_Model {
     public function __construct() {
         parent::__construct();
@@ -116,6 +120,18 @@ SQL;
 SQL;
         
         $this->db->query($sql);
+    }
+    
+    
+    public function update_alumnos_asignaturas_evaluacion($id_alumno,$id_contenido,$evaluacion,$nota){
+        $sql= <<< SQL
+        UPDATE evaluacion
+        set nota = $nota
+        WHERE id_alumno = $id_alumno and id_contenido = $id_contenido
+        and num_evaluacion = $evaluacion        
+SQL;
+        $this->db->query($sql);
+       
     }
    
 }

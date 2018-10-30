@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	<a class="navbar-brand" href="#"> <img class="logo" src="http://bootstrap-ecommerce.com/main/images/logo-white.png" height="40"> LOGO</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-color-purple">
+	<a class="navbar-brand" href="<?php echo base_url()?>index.php/main_view"> <img class="logo" src="<?php echo base_url('application/images/logo.png'); ?>" height="40"> Codeigniter-Alumnos-Centro</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>

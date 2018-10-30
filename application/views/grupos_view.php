@@ -12,13 +12,14 @@
                             <thead>
                                 <th>Código</th>
                                 <th>Nombre Ciclo</th>
+                                <th>Acciones</th>
                             </thead>                       
                             <?php foreach ($grupos as $grupo) {?>
                             <tr>
                                 <td>
                                     <div class="dropdown">
 
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <button class="btn btn-secondary dropdown-toggle bg-color-purple" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                           <?php echo $grupo->codigo ?>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -29,6 +30,10 @@
                                 </td>
                                 <td>
                                     <?php echo $grupo->nombre ?>
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-secondary bg-color-purple"><i class="fas fa-journal-whills" style="margin-right:5px"></i>Acta</a>
+                                    <a href="#" class="btn btn-secondary bg-color-purple"><i class="fas fa-book-open" style="margin-right:5px"></i>Evaluar</a>
                                 </td>
                             </tr>
                             <?php }?>

@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Main_view
  *
@@ -16,17 +10,29 @@ class Main_view extends CI_Controller{
     public function __construct() {
         parent::__construct();
         $this->load->helper('url');
+        $this->load->helper('html');
+
         $this->load->model('cursos');
         
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->helper('security');   
+       
     }
-    
+    /*
+     * Metodos para cargar las vistas. loadSingleView, carga las vistas sin menú, mientras que loadView carga la vista
+     * con menú para ello se especifican los métodos header ( para cargar menu junto con css ) o loadHead ( solamente carga
+     * css)
+     */
+
     public function loadHeader(){       
         //check sql if nesesari
         $this->load->view('includes/head', null);
         $this->load->view('includes/header', null);
+    }
+    
+    public function loadHead(){
+        $this->load->view('includes/head', null);
     }
     
     public function loadView($view,$data){
@@ -35,16 +41,18 @@ class Main_view extends CI_Controller{
         $this->load->view('includes/footer',null);
     }
     
+    public function loadSingleView($view,$data){
+        $this->loadHead();
+        $this->load->view($view, $data);
+    }
+    
+    /*Funcion que se ejecuta con la llamada del controlador*/
+    
     public function index(){
         $this->loadView('main_view', null);
     }
     
-    public function loadHome(){
-        $this->loadView('home_view', null);
-    }
-    
-    //VIEWS
-    
+    /*Función que llama a los cursos*/
     public function loadGrupos(){
         $data['title'] = "Cursos";
         $data['grupos'] = $this->cursos->get_grupos();
@@ -52,6 +60,7 @@ class Main_view extends CI_Controller{
         $this->loadView('grupos_view',$data);
     }
     
+    /*Dentro de la vista cursos esta función carga los alumnos*/
     public function loadGruposAlumnos($codigo_grupo){
         $data['title'] = "Alumnos perteneciente al Curso";
         $data['alumnos'] = $this->cursos->get_grupos_alumnos($codigo_grupo);
@@ -59,6 +68,7 @@ class Main_view extends CI_Controller{
         $this->loadView('grupos_alumnos_view',$data);        
     }
     
+    /*Dentro de la vista cursos esta función carga las asignaturas*/
     public function loadGruposAsignaturas($codigo_grupo){
         $data['title'] = "Asignaturas";
         $data['asignaturas'] = $this->cursos->get_grupos_asignaturas($codigo_grupo);
@@ -66,6 +76,10 @@ class Main_view extends CI_Controller{
         $this->loadView('grupos_asignaturas_view',$data);        
     }
     
+    
+    //APARTADO ALUMNOS
+    
+    /*Función que carga los alumnos*/
     public function loadAlumnos(){
         $data['title']="Alumnos";
         $data['alumnos'] = $this->cursos->get_alumnos();
@@ -73,7 +87,7 @@ class Main_view extends CI_Controller{
         $this->loadView('alumnos_view', $data);
                 
     }
-    
+    /*Funcion que recoge el valor de las evaluaciones*/
     public function getValueEvaluacion($id_alumno,$id_asignatura,$num_evaluacion){
         $evaluacion = $this->cursos->get_alumnos_asignaturas_evaluacion($id_alumno ,$id_asignatura,$num_evaluacion); 
         foreach ($evaluacion as $value) {
@@ -81,6 +95,7 @@ class Main_view extends CI_Controller{
         }         
     }
     
+    /*Funcion que cargará por alumno, sus evaluaciones*/
     public function loadAlumnosAsignaturas($id_alumno){
         /*Generamos un nuevo array de asignaturas junto sus evaluaciones 
           Por cada asignatura se añade el valor de sus evaluaciones */
@@ -108,35 +123,59 @@ class Main_view extends CI_Controller{
         
         }
        
-        $data['alert_state']="alert alert-warning alert-dismissible show";
-        $data['evaluaciones']=$evaluaciones;
-           
+        $data['evaluaciones']=$evaluaciones;       
         $this->loadView('alumnos_asignaturas_view', $data);
     }
     
-   
+    /*Función que se encarga de manejar el formulario donde se añaden las notas del alumno*/
     public function form_notas($id_alumno){
+
+        //get post
+        $postData = $this->input->post();
         
-        $nota = $this->input->post('nota');
+        $nota = $postData['nota'];
+        $asignatura = $postData['asign'];
+        $evaluacion = $postData['eval'];
 
         $this->form_validation->set_rules('nota','Nota','required|greater_than_equal_to[0]|less_than_equal_to[10]');
        
         if ($this->form_validation->run() == FALSE){
-            //ERROR        
+            //ERROR En caso de error debe de volver a la misma vista
+            $this-> loadAlumnosAsignaturas($id_alumno);        
         }else{
-            //SUCCESS
-            $evaluacion = $this->getValueEvaluacion($id_alumno, $this->input->post('asign'), $this->input->post('eval'));    
-            if(empty($evaluacion)){
-                //El valor en dicha situación está vacio, podemos introducir el dato.
-                $this->cursos->set_alumnos_asignaturas_evaluacion($id_alumno, $this->input->post('asign'), $this->input->post('eval'),$nota);       
+            //SUCCESS   
+            $evaluacion_vaule = $this->getValueEvaluacion($id_alumno, $asignatura, $evaluacion); 
+
+            if($evaluacion_vaule!=""){             
+                //Existe un valor > actualizamos
+                
+                //$this->cursos->update_alumnos_asignaturas_evaluacion($id_alumno,$asignatura,$evaluacion,$nota);
+                //$this-> loadAlumnosAsignaturas($id_alumno);
+                
+                $data['title']="test";
+                $data['id_alumno']=$id_alumno;
+                $data['id_asignatura']=$asignatura;
+                $data['evaluacion']=$evaluacion;
+                $data['nota']=$nota;
+                              
+                $this->loadSingleView('alumnos_asignaturas_grupos_view_form_replace', $data);
+                
             }else{
-                //El valor existe, deseamos remplazarlo, crear una vista con dos botones si y no y remplazar el dato.
-                
-                
-            }
-   }     
-        //Una vez optenidos los datos, volvemos a cargar la vista
-        $this->loadAlumnosAsignaturas($id_alumno);
+                //No existe valor > insertamos valor
+                $this->cursos->set_alumnos_asignaturas_evaluacion($id_alumno,$asignatura,$evaluacion,$nota);     
+                $this-> loadAlumnosAsignaturas($id_alumno);
+            }                   
+        }     
     }
     
+    public function updateAlumnosAsignaturas($id_alumno,$asignatura,$evaluacion,$nota){
+        $this->cursos->update_alumnos_asignaturas_evaluacion($id_alumno,$asignatura,$evaluacion,$nota);
+        $this-> loadAlumnosAsignaturas($id_alumno);
+    }
+    
+    //historial
+    
+    public function loadAlumnosAsignaturasHistorial(){
+        $this->loadView('alumnos_asignaturas_historial_view', null);
+    }
 }

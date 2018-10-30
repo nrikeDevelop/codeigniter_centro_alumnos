@@ -3,13 +3,6 @@
         <div class="row">
             <div class="col-xs-12 col-lg-12">
                 <br><br>
-                
-                <div class="<?php echo $alert_state?>" role="alert">                  
-                      La nota introducida ya existe, ¿Desea remplazarla?
-                        <a class="btn btn-warning" style="margin-left:30px;margin-right:10px;">Si</a><a class="btn btn-warning">No</a>
-                  </div>
-                <br>
-                
                 <?php echo validation_errors( '<div class="alert alert-danger">', '</div>');?>
                 
                 <div class="card">
@@ -54,15 +47,18 @@
                                 <th class="td-center"> 1 Evaluación</th>
                                 <th class="td-center"> 2 Evaluación</th>
                                 <th class="td-center"> 3 Evaluación</th>
+                                <th></th>
                             </thead>
                             <tbody>
                                 <?php foreach ($evaluaciones as $evaluacion) {?>
                                 <tr>
                                     <td><?php echo $evaluacion["asignatura"]?></td>
+
                                     <!-- PREGUNTAMOS POR LA NOTA -->
                                     <td class="td-center"><?php echo $evaluacion["notas"]["eva1"]?></td>
                                     <td class="td-center"><?php echo $evaluacion["notas"]["eva2"]?></td>
                                     <td class="td-center"><?php echo $evaluacion["notas"]["eva3"]?></td> 
+                                    <td><a href="<?php echo base_url()?>index.php/main_view/loadAlumnosAsignaturasHistorial" class="btn btn-secondary ">Historial</a></td>
                                 </tr>                                                   
                                 <?php }?>          
                             </tbody>                       
