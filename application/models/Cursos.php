@@ -19,7 +19,8 @@ class Cursos extends CI_Model {
            
     public function get_grupos(){
         $sql = <<< SQL
-        select codigo,nombre from grupos
+        select id,codigo,nombre 
+            from grupos
 SQL;
         $response = $this->db->query($sql);
         return $response->result();              
@@ -43,7 +44,8 @@ SQL;
     
     public function get_grupos_asignaturas($codigo_grupo){
         $sql = <<< SQL
-        SELECT cont.nombre_cas as nombre
+        SELECT cont.nombre_cas as nombre,
+                gru.nombre as nombre_grupo
         FROM grupos gru, cursos_grupos cugru, cursos cur,contenidos cont
         where gru.id = cugru.id_grupo AND
                 cugru.curso = cur.codigo AND
@@ -133,5 +135,10 @@ SQL;
         $this->db->query($sql);
        
     }
+    
+    
+    //VERSION2
+    
+    
    
 }

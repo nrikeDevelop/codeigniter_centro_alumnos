@@ -178,4 +178,28 @@ class Main_view extends CI_Controller{
     public function loadAlumnosAsignaturasHistorial(){
         $this->loadView('alumnos_asignaturas_historial_view', null);
     }
+    
+    
+    
+/**VERSION2**/
+    
+    public function loadGruposEvaluar($codigo_grupo){
+        
+        $data['asignaturas'] = $this->cursos->get_grupos_asignaturas($codigo_grupo);        
+        foreach ($data['asignaturas'] as $asignatura){
+            $data['titulo'] = $asignatura->nombre_grupo;
+            break;
+        }
+        
+        $this->loadView('grupos_evaluar_view', $data);
+    }
+    
+    public function loadGruposEvaluarAlumnos(){
+        
+        $data['titulo']="Alumno";
+        
+        $this->loadView('grupos_evaluar_asignaturas_view', $data);
+
+    }
+    
 }

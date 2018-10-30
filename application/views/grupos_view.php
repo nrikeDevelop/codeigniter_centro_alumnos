@@ -33,7 +33,7 @@
                                 </td>
                                 <td>
                                     <a href="#" class="btn btn-secondary bg-color-purple"><i class="fas fa-journal-whills" style="margin-right:5px"></i>Acta</a>
-                                    <a href="#" class="btn btn-secondary bg-color-purple"><i class="fas fa-book-open" style="margin-right:5px"></i>Evaluar</a>
+                                    <a href="loadGruposEvaluar/<?php echo $grupo->codigo ?>" class="btn btn-secondary bg-color-purple"><i class="fas fa-book-open" style="margin-right:5px"></i>Asignaturas</a>
                                 </td>
                             </tr>
                             <?php }?>
