@@ -195,10 +195,8 @@ class Main_view extends CI_Controller{
     }
     
     public function loadGruposEvaluarAlumnos(){
+
         
-        $data['titulo']="Alumno";
-        
-        $this->loadView('grupos_evaluar_asignaturas_view', $data);
 
     }
     

@@ -94,6 +94,7 @@ SQL;
         $response = $this->db->query($sql);
         return $response->result();      
     }
+    /*
     
     public function get_alumnos_asignaturas_evaluacion($id_alumno,$id_contenido,$evaluacion){
         $sql = <<< SQL
@@ -136,9 +137,29 @@ SQL;
        
     }
     
+     * */
+   
     
     //VERSION2
     
+    public function get_grupos_asignaturas_evaluar (){
+        $sql= <<< SQL
+        SELECT
+        contenidos.id as id_contenido,
+        contenidos.nombre_cas as nombre_contenido,
+        cursos.abreviatura as abreviatura_curso,
+        alumnos.NIA as nia_alumnos,
+        CONCAT(alumnos.nombre,' ',alumnos.apellido1,' ',alumnos.apellido2) as nombre_alumno,
+        notas.nota as nota
+        FROM contenidos
+        LEFT JOIN cursos on cursos.codigo = contenidos.curso
+        LEFT JOIN cursos_grupos on cursos_grupos.curso = cursos.codigo
+        LEFT JOIN grupos on grupos.id = cursos_grupos.id_grupo
+        LEFT JOIN matricula on matricula.id_grupo = grupos.id
+        LEFT JOIN alumnos on alumnos.NIA = matricula.NIA
+        LEFT JOIN notas on notas.NIA = matricula.NIA            
+SQL;
+    }
     
    
 }

@@ -17,6 +17,7 @@
                                 <tr>
                                     <td>
                                        <?php echo $asignatura->nombre ?> 
+              
                                     </td>
                                     <td>
                                     <a href="<?php echo base_url()?>index.php/main_view/loadGruposEvaluarAlumnos" class="btn btn-secondary bg-color-purple"><i class="fas fa-book-open" style="margin-right:5px"></i>Evaluar</a>
