@@ -45,7 +45,10 @@ SQL;
     public function get_grupos_asignaturas($codigo_grupo){
         $sql = <<< SQL
         SELECT cont.nombre_cas as nombre,
-                gru.nombre as nombre_grupo
+                gru.nombre as nombre_grupo,
+                gru.id as id_grupo,
+                cur.abreviatura as abreviatura_curso,
+                cont.id as id_contenido
         FROM grupos gru, cursos_grupos cugru, cursos cur,contenidos cont
         where gru.id = cugru.id_grupo AND
                 cugru.curso = cur.codigo AND
@@ -142,7 +145,7 @@ SQL;
     
     //VERSION2
     
-    public function get_grupos_asignaturas_evaluar (){
+    public function get_grupos_asignaturas_evaluar ($id_contenido,$id_grupo){
         $sql= <<< SQL
         SELECT
         contenidos.id as id_contenido,
@@ -157,8 +160,11 @@ SQL;
         LEFT JOIN grupos on grupos.id = cursos_grupos.id_grupo
         LEFT JOIN matricula on matricula.id_grupo = grupos.id
         LEFT JOIN alumnos on alumnos.NIA = matricula.NIA
-        LEFT JOIN notas on notas.NIA = matricula.NIA            
+        LEFT JOIN notas on notas.NIA = matricula.NIA
+        where contenidos.id="$id_contenido" and grupos.id="$id_grupo"            
 SQL;
+        $response = $this->db->query($sql);
+        return $response->result();
     }
     
    

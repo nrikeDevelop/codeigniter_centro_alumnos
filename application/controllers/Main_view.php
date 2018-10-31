@@ -194,10 +194,17 @@ class Main_view extends CI_Controller{
         $this->loadView('grupos_evaluar_view', $data);
     }
     
-    public function loadGruposEvaluarAlumnos(){
+    public function loadGruposEvaluarAlumnos($id_contenido,$id_grupo){
 
+        $data['alumnos']= $this->cursos->get_grupos_asignaturas_evaluar($id_contenido,$id_grupo);
         
-
+        foreach ($data['alumnos'] as $value) {
+            $data['titulo']=$value->nombre_contenido;
+            break;
+        }
+        
+        
+        $this->loadView('grupos_evaluar_alumnos_view',$data);
     }
     
 }

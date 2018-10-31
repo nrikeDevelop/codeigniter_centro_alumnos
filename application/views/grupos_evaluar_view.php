@@ -19,7 +19,7 @@
                                        <?php echo $asignatura->nombre ?> 
                                     </td>
                                     <td>
-                                    <a href="<?php echo base_url()?>index.php/main_view/loadGruposEvaluarAlumnos" class="btn btn-secondary bg-color-purple"><i class="fas fa-book-open" style="margin-right:5px"></i>Evaluar</a>
+                                    <a href="<?php echo base_url().'index.php/main_view/loadGruposEvaluarAlumnos/'.$asignatura->id_contenido.'/'.$asignatura->id_grupo?>" class="btn btn-secondary bg-color-purple"><i class="fas fa-book-open" style="margin-right:5px"></i>Evaluar</a>
                                     </td>
                                 </tr>
                                 <?php } ?>
