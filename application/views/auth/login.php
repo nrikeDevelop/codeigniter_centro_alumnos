@@ -1,28 +1,61 @@
-<h1><?php echo lang('login_heading');?></h1>
-<p><?php echo lang('login_subheading');?></p>
+<head>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url()?>semantic/dist/semantic.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="<?php echo base_url()?>semantic/dist/semantic.min.js"></script>
+<style>
+    body{
+      background-color: #4E2EA3;
+    }
 
-<div id="infoMessage"><?php echo $message;?></div>
+    body > .grid {
+      height: 100%;
+    }
 
-<?php echo form_open("auth/login");?>
+  .resize{
+    max-width:500px;
+  }
 
-  <p>
-    <?php echo lang('login_identity_label', 'identity');?>
-    <?php echo form_input($identity);?>
-  </p>
+</style>
+</head>
 
-  <p>
-    <?php echo lang('login_password_label', 'password');?>
-    <?php echo form_input($password);?>
-  </p>
+<div class="ui middle aligned center aligned grid">
+  <div class="column resize">
+    <form class="ui large form" method="POST" action="<?php echo base_url()?>index.php/auth/login" >
+      <div class="ui stacked segment">
+        <div class="ui message">
+          <p>     
+          <?php echo $message;?>
+          </p>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <?php echo form_input($identity);?>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <?php echo form_input($password);?>
+          </div>
+        </div>
+        <button class="ui fluid large teal submit button" type="submit">Entrar</button>        
 
-  <p>
-    <?php echo lang('login_remember_label', 'remember');?>
-    <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"');?>
-  </p>
+      </div>
 
+      <div class="ui error message"></div>
 
-  <p><?php echo form_submit('submit', lang('login_submit_btn'));?></p>
+    </form>
+<!--
+    <div class="ui message">
+      ¿No estas registrado? <a href="#">Registrate</a>
+    </div>
+  </div>
+  -->
+  
+</div>
 
-<?php echo form_close();?>
-
-<p><a href="forgot_password"><?php echo lang('login_forgot_password');?></a></p>
+</div>

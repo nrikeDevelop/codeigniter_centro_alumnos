@@ -9,14 +9,21 @@ class Main_view extends CI_Controller{
     
     public function __construct() {
         parent::__construct();
+
+
         $this->load->helper('url');
         $this->load->helper('html');
 
         $this->load->model('cursos');
+        $this->load->model('auth_query');
         
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
-        $this->load->helper('security');   
+        $this->load->helper('security');  
+        
+        
+        $this->load->library('Ion_auth');
+
        
     }
     /*
@@ -27,12 +34,30 @@ class Main_view extends CI_Controller{
 
     public function loadHeader(){       
         //check sql if nesesari
-        $this->load->view('includes/head', null);
-        $this->load->view('includes/header', null);
+        $data['admin']=FALSE;
+
+        $user_id = $this->ion_auth->user()->row()->id; 
+        $user_info = $this->auth_query->is_admin($user_id);
+        foreach($user_info as $info){
+            if ($info->group_id == 1){
+                $data['admin']=TRUE;
+            }
+        }
+
+        $this->load->view('includes/head', $data);
+        $this->load->view('includes/header', $data);
     }
     
     public function loadHead(){
-        $this->load->view('includes/head', null);
+        $data['admin']=FALSE;
+        $user_id = $this->ion_auth->user()->row()->id; 
+        $user_info = $this->auth_query->is_admin($user_id);
+        foreach($user_info as $info){
+            if ($info->group_id == 1){
+                $data['admin']=TRUE;
+            }
+        }
+        $this->load->view('includes/head', $data);
     }
     
     public function loadView($view,$data){
@@ -51,7 +76,7 @@ class Main_view extends CI_Controller{
     public function index(){
         $this->loadView('main_view', null);
     }
-    
+
     /*Función que llama a los cursos*/
     public function loadGrupos(){
         $data['title'] = "Cursos";
