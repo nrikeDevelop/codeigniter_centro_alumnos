@@ -23,10 +23,15 @@
 
 </style>
 </head>
-<div class="ui right aligned container fluid">
-	<div class="column">
-		salir
-	</div>
+
+<div class="ui menu">
+    <div class="right menu">
+        <a href="<?php echo base_url() ?>index.php/main_view/">
+                <div style="background-color: white;padding:20px;">
+                    <i class="fas fa-sign-out-alt"></i>Salir
+                </div>
+        </a>
+    </div>
 </div>
 <div class="ui middle aligned center aligned grid">
 	<div class="column resize">
@@ -60,23 +65,26 @@
 			<?php endforeach;?>
 		</table>
   		<p>
-			<div class="ui animated fade button">
+                    <a href="<?php echo base_url()?>index.php/auth/create_group" >
+                        <div class="ui animated fade button">
 			<div class="hidden content">
-				<a href="#">Grupos</a>
+				Grupos
 			</div>
 			<div class="visible content">
 				<i class="fas fa-users"></i>
 			</div>
 			</div>
-			<div class="ui vertical animated button">
+                    </a>
+                    <a href="<?php echo base_url()?>index.php/auth/create_user" >
+			<div class="ui animated fade button">
 			<div class="hidden content">
-				<a href="#">Users</a>
+				Users
 			</div>
 			<div class="visible content">
 				<i class="fas fa-user"></i>
 			</div>
 			</div>
+                    </a>
 		</p>
-		<p><?php echo anchor('auth/create_user', lang('index_create_user_link'))?> | <?php echo anchor('auth/create_group', lang('index_create_group_link'))?></p>
 	</div>
 </div>

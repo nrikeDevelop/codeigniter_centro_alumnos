@@ -1,20 +1,51 @@
-<h1><?php echo lang('edit_group_heading');?></h1>
-<p><?php echo lang('edit_group_subheading');?></p>
+<head>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url()?>semantic/dist/semantic.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="<?php echo base_url()?>semantic/dist/semantic.min.js"></script>
+<style>
+    body{
+      background-color: #4E2EA3;
+    }
 
-<div id="infoMessage"><?php echo $message;?></div>
+    body > .grid {
+      height: 100%;
+    }
 
-<?php echo form_open(current_url());?>
+  .resize{
+    max-width:500px;
+  }
 
-      <p>
-            <?php echo lang('edit_group_name_label', 'group_name');?> <br />
-            <?php echo form_input($group_name);?>
-      </p>
+</style>
+</head>
 
-      <p>
-            <?php echo lang('edit_group_desc_label', 'description');?> <br />
-            <?php echo form_input($group_description);?>
-      </p>
 
-      <p><?php echo form_submit('submit', lang('edit_group_submit_btn'));?></p>
+<div class="ui middle aligned center aligned grid">
+     <div class="column resize">
+        <div class="ui large form" >
+            <div style="color_white" id="infoMessage"><?php echo $message;?></div>
+            <div class="ui stacked segment">              
+                <?php echo form_open(current_url());?>
 
-<?php echo form_close();?>
+                      <p>
+                            <?php echo lang('edit_group_name_label', 'group_name');?> <br />
+                            <?php echo form_input($group_name);?>
+                      </p>
+
+                      <p>
+                            <?php echo lang('edit_group_desc_label', 'description');?> <br />
+                            <?php echo form_input($group_description);?>
+                      </p>
+
+                    <button type="submit" class="ui primary button">
+                        Crear Grupo
+                    </button>
+                    <a href="<?php echo base_url()?>index.php/auth/" class="ui button">
+                        Cancelar
+                    </a>
+            </div>
+        </div>
+     </div>
+</div>
