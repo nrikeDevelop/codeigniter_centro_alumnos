@@ -91,7 +91,7 @@
                     <?php echo form_hidden($csrf); ?>
 
                     <button type="submit" class="ui primary button">
-                        Crear Grupo
+                        Editar
                     </button>
                     <a href="<?php echo base_url()?>index.php/auth/" class="ui button">
                         Cancelar

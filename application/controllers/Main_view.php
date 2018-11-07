@@ -26,6 +26,7 @@ class Main_view extends CI_Controller{
 
        
     }
+    
     /*
      * Metodos para cargar las vistas. loadSingleView, carga las vistas sin menú, mientras que loadView carga la vista
      * con menú para ello se especifican los métodos header ( para cargar menu junto con css ) o loadHead ( solamente carga

@@ -49,12 +49,12 @@
       <div class="ui error message"></div>
 
     </form>
-<!--
+
     <div class="ui message">
-      ¿No estas registrado? <a href="#">Registrate</a>
+        ¿No estas registrado? <a href="<?php echo base_url()?>index.php/auth/open_register">Registrate</a>
     </div>
   </div>
-  -->
+  
   
 </div>
 

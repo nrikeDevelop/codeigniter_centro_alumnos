@@ -12,7 +12,7 @@ class Auth extends CI_Controller
 		parent::__construct();
 		$this->load->database();
 		$this->load->library(array('ion_auth', 'form_validation'));
-		$this->load->helper(array('url', 'language'));
+		$this->load->helper(array('url', 'language','form'));
 
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
@@ -50,8 +50,26 @@ class Auth extends CI_Controller
 			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'index', $this->data);
 		}
 	}
+        
+        public function open_register(){
+            $this->load->view('auth/register');
+        }
+        
+        public function form_register(){
+            $formData = $this->input->post();
+            $username = $formData['username'];
+            $password = $formData['password'];
+            $email = $formData['email'];
+            $additional_data = array(
+                'first_name' => $formData['first_name'],
+                'last_name' => $formData['last_name'],
+                );
+            $this->ion_auth->register($username, $password, $email, $additional_data);
+            
+            redirect('/auth/login', 'refresh');
+        }
 
-	/**
+        /**
 	 * Log the user in
 	 */
 	public function login()

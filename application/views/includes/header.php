@@ -7,24 +7,27 @@
   </button>
   <div class="collapse navbar-collapse" id="navbar1">
     <ul class="navbar-nav ml-auto"> 
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url()?>index.php/main_view/loadAlumnos">Alumnos</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url()?>index.php/main_view/loadGrupos">Cursos</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url()?>index.php/auth/logout">
-            <i class="fas fa-sign-out-alt" style="margin-right:3px"></i>Logout</a>
-        </li>
-
-
         <?php if ( $admin == TRUE){?>
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url()?>index.php/auth/">
                 <i class="fas fa-cog" style="margin-right:3px"></i>Administrar</a>
             </li> 
-        <?php }?>
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo base_url()?>index.php/main_view/loadAlumnos">Alumnos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url()?>index.php/main_view/loadGrupos">Cursos</a>
+            </li>
+        <?php }else{ ?>
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo base_url()?>index.php/auth/logout">
+            <i class="fas fa-sign-out-alt" style="margin-right:3px"></i>Calificaciones</a>
+            </li>
+        <?php } ?>
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo base_url()?>index.php/auth/logout">
+            <i class="fas fa-sign-out-alt" style="margin-right:3px"></i>Logout</a>
+        </li>
 
         <li style="margin-left: 100px;"></li>
         <!--
