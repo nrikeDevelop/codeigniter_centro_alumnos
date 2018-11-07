@@ -146,12 +146,13 @@ SQL;
     //VERSION2
     
     public function get_grupos_asignaturas_evaluar ($id_contenido,$id_grupo){
+           
         $sql= <<< SQL
         SELECT
         contenidos.id as id_contenido,
         contenidos.nombre_cas as nombre_contenido,
         cursos.abreviatura as abreviatura_curso,
-        alumnos.NIA as nia_alumnos,
+        alumnos.NIA as nia_alumno,
         CONCAT(alumnos.nombre,' ',alumnos.apellido1,' ',alumnos.apellido2) as nombre_alumno,
         notas.nota as nota
         FROM contenidos
@@ -163,9 +164,41 @@ SQL;
         LEFT JOIN notas on notas.NIA = matricula.NIA
         where contenidos.id="$id_contenido" and grupos.id="$id_grupo"            
 SQL;
+
+/*
+
+        $sql= <<<SQL
+        SELECT  notas.nota as nota,
+        contenidos.nombre_cas as nombre_contenido,
+        alumnos.NIA as nia_alumno, 
+        CONCAT(apellido1, ' ',apellido2, ', ',alumnos.nombre) as nombre_alumno,
+        email, 
+        fecha_nac, 
+        nif, 
+        grupos.codigo as grupo 
+            FROM matricula 
+            LEFT JOIN alumnos ON alumnos.NIA = matricula.NIA
+            LEFT JOIN notas on notas.NIA = matricula.NIA
+            LEFT JOIN grupos ON grupos.id = matricula.id_grupo
+            left join contenidos on contenidos.id = notas.contenido
+            WHERE  grupos.id = $id_grupo 
+SQL;
+*/
         $response = $this->db->query($sql);
         return $response->result();
     }
     
+
+    public function update_grupos_asignaturas_evaluar($nia_alumno,$id_grupo,$id_contenido,$nota){
+        $data = array(
+                'NIA' => $nia_alumno,
+                'grupo'  => $id_grupo,
+                'contenido'  => $id_contenido,
+                'nota'  => $nota
+
+        );
+        
+        $this->db->replace('notas', $data);
+    }
    
 }

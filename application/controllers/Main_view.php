@@ -216,21 +216,42 @@ class Main_view extends CI_Controller{
             $data['titulo'] = $asignatura->nombre_grupo;
             break;
         }
-        
         $this->loadView('grupos_evaluar_view', $data);
     }
     
     public function loadGruposEvaluarAlumnos($id_contenido,$id_grupo){
 
         $data['alumnos']= $this->cursos->get_grupos_asignaturas_evaluar($id_contenido,$id_grupo);
+        $data['id_contenido'] = $id_contenido;
+        $data['id_grupo'] = $id_grupo;
         
         foreach ($data['alumnos'] as $value) {
             $data['titulo']=$value->nombre_contenido;
             break;
         }
-        
-        
         $this->loadView('grupos_evaluar_alumnos_view',$data);
     }
     
+    public function loadGruposEvaluarAlumnosForm($nia_alumno,$id_contenido,$id_grupo){
+
+        $postData = $this->input->post();
+        $nota = $postData['nota'];
+
+        $this->form_validation->set_rules('nota', 'Nota', 'less_than_equal_to[10]|greater_than_equal_to[0]');
+
+        $data['id_contenido'] = $id_contenido;
+        $data['id_grupo'] = $id_grupo;
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->loadGruposEvaluarAlumnos($id_contenido,$id_grupo);
+        }
+        else
+        {
+            $this->cursos->update_grupos_asignaturas_evaluar($nia_alumno,$id_grupo,$id_contenido,$nota);
+            $this->loadGruposEvaluarAlumnos($id_contenido,$id_grupo);
+        
+        }
+
+    }
+
 }
