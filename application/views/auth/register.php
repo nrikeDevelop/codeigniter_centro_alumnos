@@ -6,6 +6,7 @@
   crossorigin="anonymous"></script>
 <script src="<?php echo base_url()?>semantic/dist/semantic.min.js"></script>
 <style>
+
     body{
       background-color: #4E2EA3;
     }
@@ -24,6 +25,14 @@
 <div class="ui middle aligned center aligned grid">
     <div class="column resize">
         <div class="ui large form" >
+
+            <div style="color:white">
+              <?php echo validation_errors(); ?>
+              <br>
+              <?php $message = $this->session->flashdata('message_data');echo $message ?>
+              <br>
+            </div>
+
             <form method="POST" action="<?php echo base_url()?>index.php/auth/form_register">
             <div class="ui stacked segment">              
                 <div class="field">

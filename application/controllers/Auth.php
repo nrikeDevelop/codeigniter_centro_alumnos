@@ -14,6 +14,9 @@ class Auth extends CI_Controller
 		$this->load->library(array('ion_auth', 'form_validation'));
 		$this->load->helper(array('url', 'language','form'));
 
+		$this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
 		$this->lang->load('auth');
@@ -51,23 +54,33 @@ class Auth extends CI_Controller
 		}
 	}
         
-        public function open_register(){
-            $this->load->view('auth/register');
-        }
+    public function open_register(){
+		$this->load->view('auth/register');
+	}
         
-        public function form_register(){
-            $formData = $this->input->post();
-            $username = $formData['username'];
-            $password = $formData['password'];
-            $email = $formData['email'];
-            $additional_data = array(
-                'first_name' => $formData['first_name'],
-                'last_name' => $formData['last_name'],
-                );
-            $this->ion_auth->register($username, $password, $email, $additional_data);
-            
-            redirect('/auth/login', 'refresh');
-        }
+	public function form_register(){
+		
+		
+		$formData = $this->input->post();
+    	$username = $formData['username'];
+    	$password = $formData['password'];
+        $email = $formData['email'];
+        $additional_data = array(
+            'first_name' => $formData['first_name'],
+            'last_name' => $formData['last_name'],
+            );		
+
+		$this->form_validation->set_rules('username', 'Username', 'required|is_unique[users.username]');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required|is_unique[users.email]');
+
+		if ($this->form_validation->run() == FALSE){
+			$this->load->view('auth/register');
+		}else{
+			$this->ion_auth->register($username, $password, $email, $additional_data);
+			redirect('auth/login/', 'refresh');		
+		}
+    }
 
         /**
 	 * Log the user in
