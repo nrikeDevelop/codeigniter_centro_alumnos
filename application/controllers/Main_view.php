@@ -204,14 +204,13 @@ class Main_view extends CI_Controller{
     public function loadAlumnosAsignaturasHistorial(){
         $this->loadView('alumnos_asignaturas_historial_view', null);
     }
-    
-    
-    
+
 /**VERSION2**/
     
     public function loadGruposEvaluar($codigo_grupo){
         
-        $data['asignaturas'] = $this->cursos->get_grupos_asignaturas($codigo_grupo);        
+        $data['asignaturas'] = $this->cursos->get_grupos_asignaturas($codigo_grupo); 
+        $data['codigo_grupo'] = $codigo_grupo;       
         foreach ($data['asignaturas'] as $asignatura){
             $data['titulo'] = $asignatura->nombre_grupo;
             break;
@@ -231,7 +230,36 @@ class Main_view extends CI_Controller{
         }
         $this->loadView('grupos_evaluar_alumnos_view',$data);
     }
+
+    public function loadGruposEvaluarAlumnosAlumno($id_contenido,$id_grupo,$nia_alumno){
+        $data['id_contenido']=$id_contenido;
+        $data['id_grupo']=$id_grupo;
+        $data['nia_alumno']=$nia_alumno;
+        $data['info_alumno']=$this->cursos->get_info_alumno($nia_alumno);
+
+        $this->loadView('grupos_evaluar_alumnos_alumno_view',$data);
+    }
+
+    public function loadGruposEvaluarAlumnosAlumnoForm($id_contenido,$id_grupo,$nia_alumno){
+
+        $postData = $this->input->post();
+        $nota = $postData['nota'];
+        $descripcion = $postData['descripcion'];
+        $evaluacion = $postData['evaluacion'];
+
+        $this->form_validation->set_rules('nota','Nota','required|greater_than_equal_to[0]|less_than_equal_to[10]');
+
+        if ($this->form_validation->run() == FALSE){
+            $this-> loadGruposEvaluarAlumnosAlumno($id_contenido,$id_grupo,$nia_alumno);      
+        }else{
+            $this->cursos->update_grupos_asignaturas_evaluar($nia_alumno,$id_grupo,$id_contenido,$nota,$evaluacion,$descripcion);
+            $this-> loadGruposEvaluarAlumnosAlumno($id_contenido,$id_grupo,$nia_alumno);
+        }
+
+
+    }
     
+    /*
     public function loadGruposEvaluarAlumnosForm($nia_alumno,$id_contenido,$id_grupo){
 
         $postData = $this->input->post();
@@ -253,5 +281,6 @@ class Main_view extends CI_Controller{
         }
 
     }
+    */
 
 }

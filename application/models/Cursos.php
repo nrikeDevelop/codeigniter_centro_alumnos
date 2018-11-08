@@ -140,7 +140,7 @@ SQL;
        
     }
     
-     * */
+     *0*/
    
     
     //VERSION2
@@ -165,40 +165,39 @@ SQL;
         where contenidos.id="$id_contenido" and grupos.id="$id_grupo"            
 SQL;
 
-/*
-
-        $sql= <<<SQL
-        SELECT  notas.nota as nota,
-        contenidos.nombre_cas as nombre_contenido,
-        alumnos.NIA as nia_alumno, 
-        CONCAT(apellido1, ' ',apellido2, ', ',alumnos.nombre) as nombre_alumno,
-        email, 
-        fecha_nac, 
-        nif, 
-        grupos.codigo as grupo 
-            FROM matricula 
-            LEFT JOIN alumnos ON alumnos.NIA = matricula.NIA
-            LEFT JOIN notas on notas.NIA = matricula.NIA
-            LEFT JOIN grupos ON grupos.id = matricula.id_grupo
-            left join contenidos on contenidos.id = notas.contenido
-            WHERE  grupos.id = $id_grupo 
-SQL;
-*/
         $response = $this->db->query($sql);
         return $response->result();
     }
     
 
-    public function update_grupos_asignaturas_evaluar($nia_alumno,$id_grupo,$id_contenido,$nota){
+    public function update_grupos_asignaturas_evaluar($nia_alumno,$id_grupo,$id_contenido,$nota,$evaluacion,$descripcion){
         $data = array(
                 'NIA' => $nia_alumno,
                 'grupo'  => $id_grupo,
                 'contenido'  => $id_contenido,
-                'nota'  => $nota
+                'nota'  => $nota,
+                'evaluacion' => $evaluacion,
+                'descripcion' => $descripcion
 
         );
         
         $this->db->replace('notas', $data);
+    }
+
+    //COMMON
+    public function get_info_alumno($nia){
+        $sql=<<<SQL
+        SELECT NIA as nia,
+        CONCAT (nombre,' ',apellido1,' ',apellido2) as nombre_alumno,
+        fecha_nac as fecha_nacimiento,
+        nif,
+        email
+        FROM alumnos
+        where alumnos.NIA = $nia
+SQL;
+        $response = $this->db->query($sql);
+        return $response->result();
+
     }
    
 }
