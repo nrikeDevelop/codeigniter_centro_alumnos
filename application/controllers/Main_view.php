@@ -232,10 +232,18 @@ class Main_view extends CI_Controller{
     }
 
     public function loadGruposEvaluarAlumnosAlumno($id_contenido,$id_grupo,$nia_alumno){
+        
+        //DATOS COMUNES
         $data['id_contenido']=$id_contenido;
         $data['id_grupo']=$id_grupo;
         $data['nia_alumno']=$nia_alumno;
+
+        //DATOS ALUMNO
         $data['info_alumno']=$this->cursos->get_info_alumno($nia_alumno);
+        //DATOS NOTAS
+        $data['info_nota']=$this->cursos->get_info_alumno_nota($id_contenido,$id_grupo,$nia_alumno);
+        print_r($data['info_nota']);
+
 
         $this->loadView('grupos_evaluar_alumnos_alumno_view',$data);
     }
@@ -245,15 +253,15 @@ class Main_view extends CI_Controller{
         $postData = $this->input->post();
         $nota = $postData['nota'];
         $descripcion = $postData['descripcion'];
-        $evaluacion = $postData['evaluacion'];
+        //$evaluacion = $postData['evaluacion'];
 
         $this->form_validation->set_rules('nota','Nota','required|greater_than_equal_to[0]|less_than_equal_to[10]');
 
         if ($this->form_validation->run() == FALSE){
-            $this-> loadGruposEvaluarAlumnosAlumno($id_contenido,$id_grupo,$nia_alumno);      
+            $this->loadGruposEvaluarAlumnosAlumno($id_contenido,$id_grupo,$nia_alumno) ;
         }else{
-            $this->cursos->update_grupos_asignaturas_evaluar($nia_alumno,$id_grupo,$id_contenido,$nota,$evaluacion,$descripcion);
-            $this-> loadGruposEvaluarAlumnosAlumno($id_contenido,$id_grupo,$nia_alumno);
+            $this->cursos->update_grupos_asignaturas_evaluar($nia_alumno,$id_grupo,$id_contenido,$nota,$descripcion);
+            redirect("main_view/loadGruposEvaluarAlumnosAlumno/".$id_contenido."/".$id_grupo."/".$nia_alumno);      
         }
 
 
