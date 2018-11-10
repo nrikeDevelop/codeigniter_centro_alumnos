@@ -68,14 +68,28 @@
                         <th>Nota</th>
                     </thead>
                     <tbody>
+                        <?php if(empty($info_nota)){ ?>
                         <tr>
-                            <td>fsdfs</td>
+                            <td>Sin calificación</td>
                         </tr>
                         <tr>
-                            <td>dasfasd</td>
+                            <td></td>
                         </tr>
+                        <?php }else{ ?>
+                        <tr>
+                            <td><?php echo $contenido?></td>
+                            <td><?php echo $nota?></td>
+                        </tr>
+                        <?php } ?>
                     </tbody>
                     <table>
+                        <?php if(!empty($description)){ ?>
+                        <div class="ui stacked segment">
+                            
+                            <h6>Descripción</h6>
+                            <p><?php echo $descripcion?></p>
+                        </div>
+                        <?php } ?>
                 </div>
             </div>
         </div>

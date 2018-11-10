@@ -20,7 +20,7 @@
             </li>
         <?php }else{ ?>
             <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url()?>index.php/auth/logout">
+            <a class="nav-link" href="<?php echo base_url()?>index.php/main_view/loadCalificaciones">
             <i class="fas fa-sign-out-alt" style="margin-right:3px"></i>Calificaciones</a>
             </li>
         <?php } ?>

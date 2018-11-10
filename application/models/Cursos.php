@@ -97,53 +97,7 @@ SQL;
         $response = $this->db->query($sql);
         return $response->result();      
     }
-    /*
-    
-    public function get_alumnos_asignaturas_evaluacion($id_alumno,$id_contenido,$evaluacion){
-        $sql = <<< SQL
-        SELECT al.id,CONCAT(al.nombre,' ',al.apellido1,' ',al.apellido2) as nombre, cont.id,cont.nombre_cas as nombre_asignatura, eva.num_evaluacion,eva.nota
-        FROM	evaluacion eva, alumnos al, contenidos cont
-        WHERE eva.id_alumno = al.id and cont.id = eva.id_contenido AND
-        al.id = $id_alumno AND cont.id = $id_contenido AND eva.num_evaluacion = $evaluacion       
-SQL;
-        $response = $this->db->query($sql);
-        return $response->result();
-    }
-    
-    public function set_alumnos_asignaturas_evaluacion($id_alumno,$id_contenido,$evaluacion,$nota){
-        $this->db->set('id_alumno', $id_alumno);
-        $this->db->set('id_contenido', $id_contenido);
-        $this->db->set('num_evaluacion', $evaluacion);
-        $this->db->set('nota', $nota);
-        $this->db->insert('evaluacion');
-    }
-    
 
-    public function delete_alumnos_asignaturas_evaluacion($id_alumno,$id_contenido,$evaluacion,$nota){
-        $sql = <<< SQL
-        delete from evaluacion   
-        WHERE id_alumno = $id_alumno AND id_contenido=$id_contenido AND num_evaluacion = $evaluacion 
-SQL;
-        
-        $this->db->query($sql);
-    }
-    
-    
-    public function update_alumnos_asignaturas_evaluacion($id_alumno,$id_contenido,$evaluacion,$nota){
-        $sql= <<< SQL
-        UPDATE evaluacion
-        set nota = $nota
-        WHERE id_alumno = $id_alumno and id_contenido = $id_contenido
-        and num_evaluacion = $evaluacion        
-SQL;
-        $this->db->query($sql);
-       
-    }
-    
-     *0*/
-   
-    
-    //VERSION2
     
     public function get_grupos_asignaturas_evaluar ($id_contenido,$id_grupo){
            
@@ -215,8 +169,9 @@ SQL;
         $sql=<<<SQL
         SELECT c.nombre_cas as nombre_contenido,
         CONCAT(a.nombre,' ',a.apellido1,' ',a.apellido2) as nombre_alumno,
-        g.nombre,
-        n.descripcion
+        g.nombre as nombre_grupo,
+        n.descripcion as descripcion,
+        n.nota as nota
         from notas n, alumnos a, contenidos c, grupos g
         WHERE n.NIA = a.NIA and 
         n.contenido = c.id and
@@ -230,4 +185,21 @@ SQL;
         return $response->result();
     }
    
+    public function get_calificaciones_alumno($nif_alumno){
+        $sql=<<< SQL
+        SELECT CONCAT(a.nombre,' ',a.apellido1,' ',a.apellido2) as nombre_alumno,
+        a.NIA as nia_alumno,
+        a.nif as nif_alumno,
+        c.nombre_cas as nombre_contenido,
+        n.nota as nota
+        FROM contenidos c, notas n, matricula m, alumnos a
+        where c.id = n.contenido AND
+	n.NIA = m.NIA AND
+	a.NIA = m.NIA AND
+	a.nif= "$nif_alumno"
+SQL;
+        
+        $response = $this->db->query($sql);
+        return $response->result();
+    }
 }

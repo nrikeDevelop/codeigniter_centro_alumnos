@@ -34,7 +34,8 @@
             </div>
 
             <form method="POST" action="<?php echo base_url()?>index.php/auth/form_register">
-            <div class="ui stacked segment">              
+            <div class="ui stacked segment">  
+                <!--
                 <div class="field">
                     <label>First name</label>
                     <input name="first_name" type="text" placeholder="First Name">
@@ -43,8 +44,9 @@
                     <label>Last name</label>
                     <input name="last_name" type="text" placeholder="Last Name">
                   </div>
+                -->
                   <div class="field">
-                    <label>Username</label>
+                    <label>NIA</label>
                     <input name="username" type="text" placeholder="NIA">
                   </div>
                   <div class="field">

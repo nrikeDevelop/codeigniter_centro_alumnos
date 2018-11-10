@@ -54,33 +54,33 @@ class Auth extends CI_Controller
 		}
 	}
         
-    public function open_register(){
+        public function open_register(){
 		$this->load->view('auth/register');
 	}
         
-	public function form_register(){
+        public function form_register(){
 		
-		
-		$formData = $this->input->post();
-    	$username = $formData['username'];
-    	$password = $formData['password'];
-        $email = $formData['email'];
-        $additional_data = array(
-            'first_name' => $formData['first_name'],
-            'last_name' => $formData['last_name'],
-            );		
 
-		$this->form_validation->set_rules('username', 'Username', 'required|is_unique[users.username]');
-		$this->form_validation->set_rules('password', 'Password', 'required');
-		$this->form_validation->set_rules('email', 'Email', 'required|is_unique[users.email]');
+            $formData = $this->input->post();
+            $username = $formData['username'];
+            $password = $formData['password'];
+            $email = $formData['email'];
+            $additional_data = array(
+                'first_name' => null,
+                'last_name' => null,
+                );
+            $group = array('3');
+            $this->form_validation->set_rules('username', 'Username', 'required|is_unique[users.username]');
+            $this->form_validation->set_rules('password', 'Password', 'required');
+            $this->form_validation->set_rules('email', 'Email', 'required|is_unique[users.email]');
 
-		if ($this->form_validation->run() == FALSE){
-			$this->load->view('auth/register');
-		}else{
-			$this->ion_auth->register($username, $password, $email, $additional_data);
-			redirect('auth/login/', 'refresh');		
-		}
-    }
+            if ($this->form_validation->run() == FALSE){
+                    $this->load->view('auth/register');
+            }else{
+                    $this->ion_auth->register("0".$username, $password, $email, $additional_data,$group);
+                    redirect('auth/login/', 'refresh');		
+            }
+        }
 
         /**
 	 * Log the user in

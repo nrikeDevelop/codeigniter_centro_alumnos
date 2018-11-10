@@ -241,9 +241,13 @@ class Main_view extends CI_Controller{
         //DATOS ALUMNO
         $data['info_alumno']=$this->cursos->get_info_alumno($nia_alumno);
         //DATOS NOTAS
-        $data['info_nota']=$this->cursos->get_info_alumno_nota($id_contenido,$id_grupo,$nia_alumno);
-        print_r($data['info_nota']);
+        $data['info_nota']=$this->cursos->get_info_alumno_nota($nia_alumno,$id_grupo,$id_contenido);
+        foreach ($data['info_nota'] as $info){
+            $data['contenido'] = $info->nombre_contenido;
+            $data['descripcion'] = $info->descripcion;
+            $data['nota'] = $info->nota;
 
+        }
 
         $this->loadView('grupos_evaluar_alumnos_alumno_view',$data);
     }
@@ -263,32 +267,19 @@ class Main_view extends CI_Controller{
             $this->cursos->update_grupos_asignaturas_evaluar($nia_alumno,$id_grupo,$id_contenido,$nota,$descripcion);
             redirect("main_view/loadGruposEvaluarAlumnosAlumno/".$id_contenido."/".$id_grupo."/".$nia_alumno);      
         }
-
-
     }
     
-    /*
-    public function loadGruposEvaluarAlumnosForm($nia_alumno,$id_contenido,$id_grupo){
-
-        $postData = $this->input->post();
-        $nota = $postData['nota'];
-
-        $this->form_validation->set_rules('nota', 'Nota', 'less_than_equal_to[10]|greater_than_equal_to[0]');
-
-        $data['id_contenido'] = $id_contenido;
-        $data['id_grupo'] = $id_grupo;
-        if ($this->form_validation->run() == FALSE)
-        {
-            $this->loadGruposEvaluarAlumnos($id_contenido,$id_grupo);
+    
+    public function loadCalificaciones(){
+        $user = $this->ion_auth->user()->row();
+        $nif = substr($user->username,1);
+        $data['calificaciones'] = $this->cursos->get_calificaciones_alumno($nif);
+        foreach ($data['calificaciones'] as $value) {
+            $data['titulo'] = $value->nombre_alumno;
         }
-        else
-        {
-            $this->cursos->update_grupos_asignaturas_evaluar($nia_alumno,$id_grupo,$id_contenido,$nota);
-            $this->loadGruposEvaluarAlumnos($id_contenido,$id_grupo);
         
-        }
-
+        $this->loadView('calificaciones_view', $data);
+        
     }
-    */
-
+ 
 }
