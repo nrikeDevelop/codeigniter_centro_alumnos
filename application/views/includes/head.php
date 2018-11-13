@@ -40,7 +40,11 @@
             width: 50px;          
             border-radius: 50%;
             display: inline-block;
-        }      
+        }
+        
+        .opacity-6{
+            opacity: 0.6;
+        }
         
         .link-color-purple{
             color:#a997cd;

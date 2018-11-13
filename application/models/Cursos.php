@@ -74,6 +74,21 @@ SQL;
         return $response->result();  
     }
     
+    public function get_asignaturas($nia_alumno){
+        $sql=<<< SQL
+        SELECT concat (a.nombre,' ',a.apellido1,' ',a.apellido2) as nombre_alumno,
+        n.nota as nota,
+        n.contenido as id_cont,
+        c.nombre_cas as nombre_contenido
+        FROM alumnos a , matricula m, notas n , contenidos c
+        where a.NIA = m.NIA and n.NIA = m.NIA and n.contenido = c.id
+        and a.NIA = "$nia_alumno"         
+SQL;
+        $response = $this->db->query($sql);
+        return $response->result();  
+        
+    }
+    
     public function get_alumnos_asignaturas($id_alumno){
         $sql = <<< SQL
         SELECT 

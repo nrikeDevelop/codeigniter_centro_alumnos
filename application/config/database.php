@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'nrikedevelop.duckdns.org',
-	'username' => 'denalec',
-	'password' => 'denalec1234',
+	'hostname' => '10.3.4.177',
+	'username' => 'ausias',
+	'password' => 'ausias',
 	'database' => 'centro',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

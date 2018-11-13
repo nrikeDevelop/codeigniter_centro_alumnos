@@ -7,17 +7,21 @@
   </button>
   <div class="collapse navbar-collapse" id="navbar1">
     <ul class="navbar-nav ml-auto"> 
-        <?php if ( $admin == TRUE){?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url()?>index.php/auth/">
-                <i class="fas fa-cog" style="margin-right:3px"></i>Administrar</a>
-            </li> 
-            <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url()?>index.php/main_view/loadAlumnos">Alumnos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url()?>index.php/main_view/loadGrupos">Cursos</a>
-            </li>
+        <?php if ( $admin == TRUE){?>  
+          <div class="dropdown">
+            <button class="btn bg-color-purple text-color-white opacity-6 dropdown-toggle" style="margin-right:9px;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-cogs" style="margin-right: 5px"></i> Administrador
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item ui" href="<?php echo base_url()?>index.php/main_view/loadGrupos">
+                  <i class="fas fa-layer-group" style="margin-right:7px"></i>Cursos</a>
+              <a class="dropdown-item ui" href="<?php echo base_url()?>index.php/alumnos/index">
+                  <i class="fas fa-users" style="margin-right:7px"></i>Alumnos</a>
+              <a class="dropdown-item ui " href="<?php echo base_url()?>index.php/auth/">
+                <i class="fas fa-cog" style="margin-right:7px"></i>Administrar</a>
+            </div>
+          </div>
+       
         <?php }else{ ?>
             <li class="nav-item">
             <a class="nav-link" href="<?php echo base_url()?>index.php/main_view/loadCalificaciones">
@@ -30,24 +34,7 @@
         </li>
 
         <li style="margin-left: 100px;"></li>
-        <!--
-        <li class="nav-item active">
-            <a class="nav-link" href="http://bootstrap-ecommerce.com">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="html-components.html"> Documentation </a>
-        </li>
-        <li class="nav-item dropdown">
-                <a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">  Dropdown  </a>
-            <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#"> Menu item 1</a></li>
-                  <li><a class="dropdown-item" href="#"> Menu item 2 </a></li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a class="btn ml-2 btn-warning" href="http://bootstrap-ecommerce.com">Download</a>
-        </li>
-        -->
+      
     </ul>
   </div>
 </nav>

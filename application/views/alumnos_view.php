@@ -35,7 +35,7 @@
                                     <?php echo $alumno->curso?>
                                 </td>
                                 <td>
-                                    <a href="loadAlumnosAsignaturas/<?php echo $alumno->id?>/" class="btn btn-secondary bg-color-purple">Asignaturas  </a>
+                                    <a href="get_notas_alumnos/<?php echo $alumno->nia?>" class="btn btn-secondary bg-color-purple">Asignaturas  </a>
                                 </td>
                             </tr>
                             <?php } ?>
